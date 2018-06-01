@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         //二分法插入排序
         int[] array = new int[]{2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
         int[] array2 = new int[]{2, 4, 66, 7, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 3, 21, 99, 12, 1, 10, 10, 444, 56};
-        ShellSearch.sort(array2);
+        QuickSearch.sort(array2);
 //        BinarySearch.sort(array);
 
     }
