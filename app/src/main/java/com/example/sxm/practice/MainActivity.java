@@ -2,6 +2,8 @@ package com.example.sxm.practice;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.sxm.utils.LogUtils;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mImageView = null;
     private ImageView mImageView_2 = null;
     private ImageView mImageView_3 = null;
+    private Button mServiceButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.sample_image);
         mImageView_2 = findViewById(R.id.sample_image_2);
         mImageView_3 = findViewById(R.id.sample_image_3);
+        mServiceButton = findViewById(R.id.service_button);
+
+        mServiceButton.setOnClickListener(mServiceButtonListener);
 
         int vis = getWindow().getDecorView().getSystemUiVisibility();
         vis |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
@@ -283,4 +290,14 @@ public class MainActivity extends AppCompatActivity {
             return H;
         }
     }
+    private View.OnClickListener mServiceButtonListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent service = new Intent();
+            service.setComponent(new ComponentName("com.example.sxm.practice","com.example.sxm.service.OtherThreadService"));
+            MainActivity.this.startService(service);
+        }
+    };
+
+
 }
