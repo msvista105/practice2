@@ -7,14 +7,14 @@ import com.example.sxm.utils.State;
 
 public class PracticeApplication extends Application {
     private static final String TAG = "PracticeApplication";
-    private State mState = null;
+//    private State mState = null;
     @Override
     public void onCreate() {
         LogUtils.d(TAG,"onCreate");
-        mState = new State();
+//        mState = new State();
         super.onCreate();
     }
-    public State getState(){
-        return mState;
-    }
+//    public State getState(){
+//        return mState;
+//    }
 }

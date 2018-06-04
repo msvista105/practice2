@@ -1,11 +1,7 @@
 package com.example.sxm.utils;
 
-public class State {
-    int identity = 0;
-    public int getIdentity(){
-        return identity;
-    }
-    public void setIdentity(int identity){
-        this.identity = identity;
-    }
+public interface State {
+    int identification = 0;
+    int getIdentification();
+    void setIdentification(int identification);
 }

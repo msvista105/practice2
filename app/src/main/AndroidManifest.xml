@@ -17,9 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--android:process=":other_thread"-->
         <service android:name="com.example.sxm.service.OtherThreadService"
             android:exported="true"
-            android:process=":other_thread">
+            >
         </service>
     </application>
 

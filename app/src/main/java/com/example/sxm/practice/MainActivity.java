@@ -17,8 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.sxm.service.OtherThreadService;
+import com.example.sxm.utils.ActivityState;
 import com.example.sxm.utils.LogUtils;
 import com.example.sxm.utils.State;
+import com.example.sxm.utils.StateFactory;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mImageView_2 = null;
     private ImageView mImageView_3 = null;
     private Button mServiceButton = null;
+    private StateFactory mFactory = null;
+    private ActivityState mActivityState = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         mServiceButton.setOnClickListener(mServiceButtonListener);
 
-        State state = ((PracticeApplication)(this.getApplication())).getState();
-        LogUtils.d(TAG,"onCreate state:"+state);
+        if(mFactory == null){
+            mFactory = new StateFactory().getInstance();
+        }
+
+
+//        State state = ((PracticeApplication)(this.getApplication())).getState();
+        mActivityState = mFactory.getState(ActivityState.class);
+        LogUtils.d(TAG,"onCreate state.name:"+mActivityState.getClass().getName()+" ---- mFactory:"+mFactory);
 
         int vis = getWindow().getDecorView().getSystemUiVisibility();
         vis |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
