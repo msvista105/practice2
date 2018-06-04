@@ -16,7 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sxm.service.OtherThreadService;
 import com.example.sxm.utils.LogUtils;
+import com.example.sxm.utils.State;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         mServiceButton = findViewById(R.id.service_button);
 
         mServiceButton.setOnClickListener(mServiceButtonListener);
+
+        State state = ((PracticeApplication)(this.getApplication())).getState();
+        LogUtils.d(TAG,"onCreate state:"+state);
 
         int vis = getWindow().getDecorView().getSystemUiVisibility();
         vis |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
@@ -294,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent service = new Intent();
-            service.setComponent(new ComponentName("com.example.sxm.practice","com.example.sxm.service.OtherThreadService"));
+            service.setClass(MainActivity.this,OtherThreadService.class);
             MainActivity.this.startService(service);
         }
     };

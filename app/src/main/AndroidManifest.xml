@@ -3,6 +3,7 @@
     package="com.example.sxm.practice">
 
     <application
+        android:name=".PracticeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +19,7 @@
         </activity>
         <service android:name="com.example.sxm.service.OtherThreadService"
             android:exported="true"
-            android:process="com.example.sxm.practice:other_thread">
+            android:process=":other_thread">
         </service>
     </application>
 
