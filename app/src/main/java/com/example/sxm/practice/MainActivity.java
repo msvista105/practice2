@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         QuickSearch.sort(array2);
 //        BinarySearch.sort(array);
 
+        //http test
+        HttpTest test = new HttpTest();
+        test.startTest();
+
     }
 
     @Override
