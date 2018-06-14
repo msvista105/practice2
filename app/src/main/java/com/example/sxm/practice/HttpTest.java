@@ -1,5 +1,6 @@
 package com.example.sxm.practice;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.sxm.utils.LogUtils;
@@ -55,6 +56,7 @@ public class HttpTest {
         }
     }
 
+    @NonNull
     private String converStreamToString(InputStream mInputStream) {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(mInputStream));

@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         HttpTest test = new HttpTest();
         test.startTest();
 
+        //volley and gson
+        VolleyAndGson mVolley = new VolleyAndGson(getApplicationContext());
+        mVolley.useJsonRequest();
+
     }
 
     @Override
