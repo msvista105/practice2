@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +25,12 @@ import com.example.sxm.utils.StateFactory;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.security.Permission;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "HMCT_MAIN";
+    private static final int PERMISSION_REQUEST_CODE = 10;
     private String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private ImageView mImageView = null;
     private ImageView mImageView_2 = null;
@@ -35,11 +38,15 @@ public class MainActivity extends AppCompatActivity {
     private Button mServiceButton = null;
     private StateFactory mFactory = null;
     private ActivityState mActivityState = null;
+    private int mNeedRequestPermissionCount = 0;
+    private boolean mNeedWriteExternalStorege = false;
+    private boolean mNeedReadExternalStorege = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkPermissions();
         mImageView = findViewById(R.id.sample_image);
         mImageView_2 = findViewById(R.id.sample_image_2);
         mImageView_3 = findViewById(R.id.sample_image_3);
@@ -47,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         mServiceButton.setOnClickListener(mServiceButtonListener);
 
-        if(mFactory == null){
+        if (mFactory == null) {
             mFactory = new StateFactory().getInstance();
         }
 
 
 //        State state = ((PracticeApplication)(this.getApplication())).getState();
         mActivityState = mFactory.getState(ActivityState.class);
-        LogUtils.d(TAG,"onCreate state.name:"+mActivityState.getClass().getName()+" ---- mFactory:"+mFactory);
+        LogUtils.d(TAG, "onCreate state.name:" + mActivityState.getClass().getName() + " ---- mFactory:" + mFactory);
 
         int vis = getWindow().getDecorView().getSystemUiVisibility();
         vis |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
@@ -74,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         //volley and gson
         VolleyAndGson mVolley = new VolleyAndGson(getApplicationContext());
         mVolley.useJsonRequest();
+        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
+        LogUtils.d(TAG, "maxSize:" + maxSize);
+        mVolley.useImageLoader(mImageView_3);
 
     }
 
@@ -242,27 +252,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void requestPermission() {
-        //判断是否已经赋予权限
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    || ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {//这里可以写个对话框之类的项向用户解释为什么要申请权限，并在对话框的确认键后续再次申请权限
-            } else {
-                //申请权限，字符串数组内是一个或多个要申请的权限，1是申请权限结果的返回参数，在onRequestPermissionsResult可以得知申请结果
-                ActivityCompat.requestPermissions(this,
-                        PERMISSIONS, 1234);
-            }
-        }
-    }
-
     /**
      * Copies of non-public {@link android.graphics.Color} APIs
      */
@@ -313,14 +302,56 @@ public class MainActivity extends AppCompatActivity {
             return H;
         }
     }
-    private View.OnClickListener mServiceButtonListener = new View.OnClickListener(){
+
+    private View.OnClickListener mServiceButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent service = new Intent();
-            service.setClass(MainActivity.this,OtherThreadService.class);
+            service.setClass(MainActivity.this, OtherThreadService.class);
             MainActivity.this.startService(service);
         }
     };
 
+    /**
+     * 检查权限，并申请没有的权限
+     */
+    private void checkPermissions() {
+        LogUtils.d(TAG, "checkPermissions");
+        for (int i = 0; i < PERMISSIONS.length; i++) {
+            if (checkSelfPermission(PERMISSIONS[i]) != PackageManager.PERMISSION_GRANTED) {
+                mNeedRequestPermissionCount++;
+                if (PERMISSIONS[i].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    mNeedWriteExternalStorege = true;
+                } else if (PERMISSIONS[i].equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    mNeedReadExternalStorege = true;
+                }
+                LogUtils.d(TAG, " dont have permission :" + PERMISSIONS[i]);
+            }
+        }
+        String[] needRequestPermissions = new String[mNeedRequestPermissionCount];
+        int index = 0;
+        if (mNeedReadExternalStorege) {
+            needRequestPermissions[index] = Manifest.permission.READ_EXTERNAL_STORAGE;
+            index++;
+        }
+        if (mNeedWriteExternalStorege) {
+            needRequestPermissions[index] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        }
+        if (mNeedReadExternalStorege || mNeedWriteExternalStorege) {
+            LogUtils.d(TAG, "---- request permission ----");
+            requestPermissions(needRequestPermissions, PERMISSION_REQUEST_CODE);
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        LogUtils.d(TAG, "permission result requestcode:" + requestCode);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    LogUtils.d(TAG, "permission result failed:" + permissions[i]);
+                }
+            }
+        }
+    }
 }
