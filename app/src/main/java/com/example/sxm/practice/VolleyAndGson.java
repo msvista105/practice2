@@ -32,9 +32,9 @@ public class VolleyAndGson {
                     public void onResponse(JSONObject response) {
                         LogUtils.d(TAG, "onResponse response:" + response.toString());
                         Article mArticle = new Gson().fromJson(response.toString(), Article.class);
-                        List<Article.detail> mDetails = mArticle.getDetail();
+                        Article.weatherinfo weatherinfos = mArticle.getWeatherinfo();
                         LogUtils.d(TAG, "------------------------------------------------------------------------------------");
-                        LogUtils.d(TAG, "mDetails.size:" + mDetails.size());
+                        LogUtils.d(TAG, "mWeatherinfos:" + ((weatherinfos == null) ? "null" : weatherinfos));
                     }
                 },
                 new Response.ErrorListener() {
