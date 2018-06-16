@@ -2,15 +2,12 @@ package com.example.sxm.practice;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +17,15 @@ import android.widget.ImageView;
 import com.example.sxm.service.OtherThreadService;
 import com.example.sxm.utils.ActivityState;
 import com.example.sxm.utils.LogUtils;
-import com.example.sxm.utils.State;
+import com.example.sxm.utils.ResultCallback;
 import com.example.sxm.utils.StateFactory;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.security.Permission;
 import java.util.Arrays;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "HMCT_MAIN";
@@ -81,9 +80,26 @@ public class MainActivity extends AppCompatActivity {
         //volley and gson
         VolleyAndGson mVolley = new VolleyAndGson(getApplicationContext());
         mVolley.useJsonRequest();
-        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
-        LogUtils.d(TAG, "maxSize:" + maxSize);
+//        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
+//        LogUtils.d(TAG, "maxSize:" + maxSize);
         mVolley.useImageLoader(mImageView_3);
+
+        //OkHttpEngine
+        long maxSize = 8*1024*1024;
+        ResultCallback callback = new ResultCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+                LogUtils.d(TAG,"ResultCallback onError:"+request.body()+" e:"+e.toString());
+            }
+
+            @Override
+            public void onResponse(Response response) {
+                LogUtils.d(TAG,"ResultCallback onResponse:"+response.networkResponse().toString());
+            }
+        };
+        OkHttpEngine okHttpEngine = OkHttpEngine.getInstance();
+        okHttpEngine.setCache(maxSize,getApplicationContext());
+        okHttpEngine.getAsynHttp("http://www.baidu.com",callback);
 
     }
 
