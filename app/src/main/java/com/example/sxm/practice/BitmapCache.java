@@ -4,6 +4,11 @@ import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.example.sxm.utils.LogUtils;
+import com.example.sxm.utils.MD5Translate;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 内存缓存
@@ -22,15 +27,17 @@ public class BitmapCache implements ImageCache {
     @Override
     public Bitmap getBitmap(String url) {
         synchronized (mCache) {
-            return mCache.get(url);
+            String str = MD5Translate.getMD5Str(url);
+            return mCache.get(str);
         }
     }
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
         synchronized (mCache) {
-            if (mCache.get(url) == null) {
-                mCache.put(url, bitmap);
+            String str = MD5Translate.getMD5Str(url);
+            if (mCache.get(str) == null) {
+                mCache.put(str, bitmap);
             }
         }
     }
