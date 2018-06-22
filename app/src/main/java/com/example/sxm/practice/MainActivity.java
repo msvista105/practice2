@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //CTS test code
-        Bitmap navbar = BitmapFactory.decodeResource(getResources(), R.mipmap.lightstatustestttt);
+        Bitmap navbar = BitmapFactory.decodeResource(getResources(), R.mipmap.lightstatustest_statusbar);
         Stats s = evaluateLightBarBitmap(navbar, Color.RED /* background */);
         Bitmap home = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_sysbar_home_darkk);
         findAlphaValue(home);

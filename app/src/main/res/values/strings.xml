@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestLightNavbar</string>
+    <string name="gl_activity">GLActivity</string>
 </resources>
