@@ -15,6 +15,8 @@ import android.widget.ImageView;
 
 import com.example.sxm.service.OtherThreadService;
 import com.example.sxm.sort.CocktailSearch;
+import com.example.sxm.sort.InsertSearch;
+import com.example.sxm.sort.SelectionSearch;
 import com.example.sxm.utils.ActivityState;
 import com.example.sxm.utils.LogUtils;
 import com.example.sxm.utils.StateFactory;
@@ -64,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(Color.RED);
         getWindow().setStatusBarColor(Color.RED);
 
+        //hide navbar
+        hideNavbar();
+
 
         //二分法插入排序
         int[] array = new int[]{2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, -1, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
         int[] array2 = new int[]{2, 4, 66, 7, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 3, 21, 99, 12, 1, 10, 10, 444, 56};
-        CocktailSearch.sort(array);
+        InsertSearch.sort(array);
 //        BubbleSearch.sort(array2);
 //        QuickSearch.sort(array2);
 //        BinarySearch.sort(array);
@@ -102,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
 
 //        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
 //        LogUtils.d(TAG, "maxSize:" + maxSize);
+    }
+
+    private void hideNavbar() {
+        int uiOption = getWindow().getDecorView().getSystemUiVisibility();
+        uiOption |= (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE//保持view布局的稳定，如出现导航栏的时候，界面不跳变resizing等
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        getWindow().getDecorView().setSystemUiVisibility(uiOption);
     }
 
     @Override

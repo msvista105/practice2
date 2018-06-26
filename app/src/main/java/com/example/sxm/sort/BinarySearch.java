@@ -1,5 +1,7 @@
 package com.example.sxm.sort;
 
+import android.util.Log;
+
 import com.example.sxm.utils.LogUtils;
 
 /**
@@ -22,7 +24,7 @@ public class BinarySearch {
         }
         if (DEBUG) {
             for (int i = 0; i < length; i++) {
-                LogUtils.d(TAG, " -- " + array[i] + " -- ");
+                Log.d(TAG, String.format("BinarySearch sort array[%d]:%d", i, array[i]));
             }
         }
     }
