@@ -63,16 +63,20 @@ public class MainActivity extends AppCompatActivity {
         LogUtils.d(TAG, "onCreate state.name:" + mActivityState.getClass().getName() + " ---- mFactory:" + mFactory);
 
         int vis = getWindow().getDecorView().getSystemUiVisibility();
-        vis |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        vis |= (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().getDecorView().setSystemUiVisibility(vis);
         getWindow().setNavigationBarColor(Color.RED);
+        getWindow().setStatusBarColor(Color.RED);
+
 
         //二分法插入排序
-        int[] array = new int[]{2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
+        int[] array = new int[]{2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, -1, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
         int[] array2 = new int[]{2, 4, 66, 7, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 3, 21, 99, 12, 1, 10, 10, 444, 56};
-        QuickSearch.sort(array2);
+        CocktailSearch.sort(array);
+//        BubbleSearch.sort(array2);
+//        QuickSearch.sort(array2);
 //        BinarySearch.sort(array);
-
+        /*
         //http test
         HttpTest test = new HttpTest();
         test.startTest();
@@ -80,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
         //volley and gson
         VolleyAndGson mVolley = new VolleyAndGson(getApplicationContext());
         mVolley.useJsonRequest();
-//        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
-//        LogUtils.d(TAG, "maxSize:" + maxSize);
         mVolley.useImageLoader(mImageView_3);
 
         //OkHttpEngine
@@ -100,18 +102,23 @@ public class MainActivity extends AppCompatActivity {
         OkHttpEngine okHttpEngine = OkHttpEngine.getInstance();
         okHttpEngine.setCache(maxSize,getApplicationContext());
         okHttpEngine.getAsynHttp("http://www.baidu.com",callback);
+        */
 
+//        long maxSize = Runtime.getRuntime().maxMemory();//这个应该是每个app可使用的内存，每一个app对应一个runtime实例
+//        LogUtils.d(TAG, "maxSize:" + maxSize);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //CTS test code
-        Bitmap navbar = BitmapFactory.decodeResource(getResources(), R.mipmap.lightstatustest_statusbar);
-        Stats s = evaluateLightBarBitmap(navbar, Color.RED /* background */);
+        /*
+        Bitmap navbar = BitmapFactory.decodeResource(getResources(), R.mipmap.sxm_3);
+        Stats s = evaluateLightBarBitmap(navbar, Color.RED);
         Bitmap home = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_sysbar_home_darkk);
         findAlphaValue(home);
         createTranslucentPng(home);
+        */
     }
 
 
@@ -190,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     s.sameHueLightPixels++;
                 } else {
                     s.sameHueDarkPixels++;
+//                    LogUtils.d("hmct_test","pixels[i]:0x"+Integer.toHexString(pixels[i]));
                 }
                 pixelss[i] = Color.BLUE;
                 continue;
