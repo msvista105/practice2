@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,17 +14,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.sxm.service.OtherThreadService;
+import com.example.sxm.sort.CocktailSearch;
 import com.example.sxm.utils.ActivityState;
 import com.example.sxm.utils.LogUtils;
-import com.example.sxm.utils.ResultCallback;
 import com.example.sxm.utils.StateFactory;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "HMCT_MAIN";
