@@ -21,8 +21,10 @@ import okhttp3.Response;
 
 public class OkHttpEngine {
     private static final String TAG = "OkHttpEngine";
+    private static Object mLock = new Object();
     private OkHttpClient mOkHttpClient;
-    private static volatile OkHttpEngine mInstance ;//线程安全？？？
+    //线程安全？？？volatile保证指令不重排，这样在创建mInstance的时候会按照分配内存、初始化对象、返回内存地址来实现
+    private static volatile OkHttpEngine mInstance ;
     private Handler mHandler;
 //    public static OkHttpEngine getInstance(){//TODO:单例模式的几种写法？？资源消耗？？线程安全？？
 //        if (mInstance == null){
@@ -36,6 +38,16 @@ public class OkHttpEngine {
 //    }
     public static OkHttpEngine getInstance(){
         return OkHttpEngineHolder.mInstance;
+    }
+    public static OkHttpEngine getInstance2() {
+        if(mInstance == null){
+            synchronized (mLock) {
+                if (mInstance == null) {
+                    mInstance = new OkHttpEngine();
+                }
+            }
+        }
+        return mInstance;
     }
     private OkHttpEngine(){
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
