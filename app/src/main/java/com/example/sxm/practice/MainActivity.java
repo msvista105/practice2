@@ -2,10 +2,13 @@ package com.example.sxm.practice;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sxm.provider.PracticeProvider;
 import com.example.sxm.service.OtherThreadService;
 import com.example.sxm.sort.BinarySearch2;
 import com.example.sxm.sort.CocktailSearch;
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         mImageView_2 = findViewById(R.id.sample_image_2);
         mImageView_3 = findViewById(R.id.sample_image_3);
         mServiceButton = findViewById(R.id.service_button);
+
+        mImageView_3.setOnClickListener(this::mContenProvider);
 
         mServiceButton.setOnClickListener(mServiceButtonListener);
 
@@ -350,6 +356,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void mContenProvider(View v){
+        ContentValues values = new ContentValues();
+        values.put("_id", "1");
+        values.put("type", "NIU");
+        values.put("size", 3000);
+        Uri uri = getApplicationContext().getContentResolver().insert(Uri.parse("content://" + PracticeProvider.URI + "/table2"), values);
+        LogUtils.d(TAG, "uri:" + uri);
+    }
     /**
      * 检查权限，并申请没有的权限
      */

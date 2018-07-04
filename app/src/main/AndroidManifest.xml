@@ -32,6 +32,10 @@
             android:exported="true"
             >
         </service>
+        <provider
+            android:authorities="com.example.sxm.provider.PracticeProvider"
+            android:name="com.example.sxm.provider.PracticeProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
