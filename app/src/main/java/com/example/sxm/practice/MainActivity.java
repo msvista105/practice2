@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sxm.collection.SetTest;
 import com.example.sxm.provider.PracticeProvider;
 import com.example.sxm.service.OtherThreadService;
 import com.example.sxm.sort.BinarySearch2;
@@ -82,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
         //二分法插入排序
         int[] array = new int[]{-1, 2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, -1, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
         int[] array2 = new int[]{2, 4, 66, 7, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, 34, 6, 7, 99, 3, 21, 99, 12, 1, 10, 10, 444, 56};
-        HeapSearch.sort(array);
+        Integer[] array3 = new Integer[]{-1, 2, 4, 5, 8, 7, 6, 6, 9, 9, 6, 11, 0, -1, 34, 6, 7, 99, 333333, 10, 10, 444, 56};
+        SetTest test = new SetTest();
+        test.test();
+//        HeapSearch.sort(array);
 //        BubbleSearch.sort(array2);
 //        QuickSearch.sort(array2);
 //        BinarySearch.sort(array);
