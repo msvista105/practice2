@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         mImageView_3.setOnClickListener(this::mContenProvider);
 
-        mServiceButton.setOnClickListener(mServiceButtonListener);
+        mServiceButton.setOnClickListener(this::mServiceButtonListener);
 
         if (mFactory == null) {
             mFactory = new StateFactory().getInstance();
@@ -351,13 +351,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener mServiceButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent service = new Intent();
-            service.setClass(MainActivity.this, OtherThreadService.class);
-            MainActivity.this.startService(service);
-        }
+    private void mServiceButtonListener (View v) {
+        Intent service = new Intent();
+        service.setClass(MainActivity.this, OtherThreadService.class);
+        MainActivity.this.startService(service);
     };
 
     private void mContenProvider(View v){

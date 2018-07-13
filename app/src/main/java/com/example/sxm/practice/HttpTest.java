@@ -70,12 +70,12 @@ public class HttpTest {
         }
         return sb.toString();
     }
-    public void startTest(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                useHttpClientGet("http://www.baidu.com");
-            }
-        }).start();
+
+    public void startTest() {
+        new Thread(
+                () -> {
+                    useHttpClientGet("http://www.baidu.com");
+                }
+        ).start();
     }
 }

@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 public class OkHttpEngine {
     private static final String TAG = "OkHttpEngine";
-    private static Object mLock = new Object();
+    private static final Object mLock = new Object();
     private OkHttpClient mOkHttpClient;
     //线程安全？？？volatile保证指令不重排，这样在创建mInstance的时候会按照分配内存、初始化对象、返回内存地址来实现
     private static volatile OkHttpEngine mInstance ;
@@ -60,6 +60,7 @@ public class OkHttpEngine {
     public OkHttpEngine setCache (long maxsize, Context context){
         //int maxSize = 8*1024*1024;//字节
         File cacheFile = context.getExternalCacheDir();
+        assert cacheFile != null;
         File absoluteCacheFile = cacheFile.getAbsoluteFile();
         mOkHttpClient = mOkHttpClient.newBuilder()
                 .cache(new Cache(absoluteCacheFile,maxsize))

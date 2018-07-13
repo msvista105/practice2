@@ -15,7 +15,7 @@ public class StateFactory {
     public <T extends State> T getState(Class<T> cls){
         T state = null;
         try{
-            state = (T) cls.newInstance();
+            state = cls.newInstance();
         }catch(Exception e){
             e.printStackTrace();
         }

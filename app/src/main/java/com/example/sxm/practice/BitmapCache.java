@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 public class BitmapCache implements ImageCache {
     private static final String TAG = "BitmapCache";
     private static final int MAX_SIZE = 8 * 1024 * 1024;//8M
-    private LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(MAX_SIZE) {
+    private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(MAX_SIZE) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getRowBytes() * value.getHeight();

@@ -81,6 +81,10 @@ public class SetTest {
             if (this == obj){
                 return true;
             }
+            if (!(obj instanceof SetElement)) {
+                return false;
+            }
+
             if (obj == null) {
                 return false;
             }
