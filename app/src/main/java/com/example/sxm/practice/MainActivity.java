@@ -13,9 +13,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sxm.blur.Blur;
 import com.example.sxm.collection.SetTest;
 import com.example.sxm.provider.PracticeProvider;
 import com.example.sxm.service.OtherThreadService;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private int mNeedRequestPermissionCount = 0;
     private boolean mNeedWriteExternalStorege = false;
     private boolean mNeedReadExternalStorege = false;
+    private ViewGroup blurView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
         mImageView_3.setOnClickListener(this::mContenProvider);
 
         mServiceButton.setOnClickListener(this::mServiceButtonListener);
+
+        blurView = (ViewGroup) findViewById(R.id.blur_test);
+        blurView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                LogUtils.d(TAG,"blurView OnGlobalLayoutListener");
+                blurView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Blur.with(MainActivity.this)
+                        .radius(8)
+                        .sample(4)
+//                        .color(0x5fff0000)
+                        .onto(blurView);
+            }
+        });
 
         if (mFactory == null) {
             mFactory = new StateFactory().getInstance();
