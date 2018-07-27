@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sxm.practice">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-feature android:glEsVersion="0x00030001" android:required="true"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:glEsVersion="0x00030001"
+        android:required="true" />
+
     <application
         android:name=".PracticeApplication"
         android:allowBackup="true"
@@ -13,29 +18,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.sxm.practice.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.sxm.opengl.GLActivity"
+        <activity
+            android:name="com.example.sxm.opengl.GLActivity"
             android:label="@string/gl_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--android:process=":other_thread"-->
-        <service android:name="com.example.sxm.service.OtherThreadService"
-            android:exported="true"
-            >
-        </service>
+        <!-- android:process=":other_thread" -->
+        <service
+            android:name="com.example.sxm.service.OtherThreadService"
+            android:exported="true"></service>
+
         <provider
-            android:authorities="com.example.sxm.provider.PracticeProvider"
             android:name="com.example.sxm.provider.PracticeProvider"
-            android:exported="true"/>
+            android:authorities="com.example.sxm.provider.PracticeProvider"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.sxm.annotation.AnnotationActivity"
+            android:label="@string/title_activity_annotation"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
