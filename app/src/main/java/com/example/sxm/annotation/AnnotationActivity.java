@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.sxm.practice.R;
+import com.example.sxm.regex.RegexTest;
 import com.example.sxm.utils.LogUtils;
 
 import java.lang.reflect.Method;
@@ -30,6 +31,8 @@ public class AnnotationActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        //Regex test
+        RegexTest.testRegex();
     }
 
     @Override
