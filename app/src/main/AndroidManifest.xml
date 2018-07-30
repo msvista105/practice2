@@ -37,7 +37,7 @@
         <!-- android:process=":other_thread" -->
         <service
             android:name="com.example.sxm.service.OtherThreadService"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <provider
             android:name="com.example.sxm.provider.PracticeProvider"
@@ -48,6 +48,15 @@
             android:name="com.example.sxm.annotation.AnnotationActivity"
             android:label="@string/title_activity_annotation"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.sxm.handler.HandlerTest"
+            android:label="@string/title_activity_handlertest"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
