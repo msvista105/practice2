@@ -54,9 +54,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.sxm.handler.HandlerTest"
-            android:label="@string/title_activity_handlertest"
-            >
+        <activity
+            android:name="com.example.sxm.handler.HandlerTest"
+            android:label="@string/title_activity_handlertest">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.sxm.testentrance.EntranceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
