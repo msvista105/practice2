@@ -3,4 +3,5 @@
     <string name="gl_activity">GLActivity</string>
     <string name="title_activity_annotation">AnnotationActivity</string>
     <string name="title_activity_handlertest">HandlerTest</string>
+    <string name="title_activity_event_bus">EventBusActivity</string>
 </resources>
