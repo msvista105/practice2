@@ -35,6 +35,8 @@ import com.example.sxm.utils.StateFactory;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "HMCT_MAIN";
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.RED);
 
         //hide navbar
-//        hideNavbar();
+        hideNavbar();
 
 
         //二分法插入排序
@@ -153,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                LogUtils.d(TAG,"onSystemUiVisibilityChange:visibility:0x"+Integer.toHexString(visibility));
+                if ((visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0) {
+//                    hideNavbar();
+                }
+            }
+        });
         //CTS test code
         /*
         Bitmap navbar = BitmapFactory.decodeResource(getResources(), R.mipmap.sxm_3);
