@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -96,8 +97,10 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(Color.RED);
         getWindow().setStatusBarColor(Color.RED);
 
+        immersive();
+
         //hide navbar
-        hideNavbar();
+//        hideNavbar();
 
 
         //二分法插入排序
@@ -142,6 +145,15 @@ public class MainActivity extends AppCompatActivity {
 //        LogUtils.d(TAG, "maxSize:" + maxSize);
     }
 
+    private void immersive() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE
+                |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);//保持view布局的稳定，如出现导航栏的时候，界面不跳变resizing等);
+    }
+
     private void hideNavbar() {
         int uiOption = getWindow().getDecorView().getSystemUiVisibility();
         uiOption |= (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -151,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
         getWindow().getDecorView().setSystemUiVisibility(uiOption);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
