@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(Color.RED);
         getWindow().setStatusBarColor(Color.RED);
 
-        immersive();
+//        immersive();
 
         //hide navbar
 //        hideNavbar();

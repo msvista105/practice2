@@ -39,6 +39,8 @@ public class AnnotationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         processDemo(Demo.class.getName());
+        //hmct-test ,imitate crash
+        throw new RuntimeException();
     }
 
     private void processDemo(String clsName){

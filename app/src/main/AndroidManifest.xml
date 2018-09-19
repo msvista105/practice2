@@ -47,6 +47,7 @@
         <activity
             android:name="com.example.sxm.annotation.AnnotationActivity"
             android:label="@string/title_activity_annotation"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
