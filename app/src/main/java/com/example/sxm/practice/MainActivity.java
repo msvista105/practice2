@@ -20,6 +20,8 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sxm.annotation.MyTag;
+import com.example.sxm.annotation.OnPermissionGranted;
 import com.example.sxm.blur.Blur;
 import com.example.sxm.collection.SetTest;
 import com.example.sxm.provider.PracticeProvider;
@@ -449,5 +451,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        try{
+            PermissionResult.permissionGranted(this,PERMISSION_REQUEST_CODE,OnPermissionGranted.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    @OnPermissionGranted(value=PERMISSION_REQUEST_CODE)
+    public void granted(){
+        LogUtils.d(TAG,"---- permission granted ----");
     }
 }
