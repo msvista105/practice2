@@ -10,4 +10,10 @@
         <attr name="showTipAfterExpand" format="boolean" />
         <attr name="isSetParentClick" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="SecretGestureView">
+        <!--列数-->
+        <attr name="colsNum" format="integer"/>
+        <!--行数-->
+        <attr name="rowsNum" format="integer"/>
+    </declare-styleable>
 </resources>

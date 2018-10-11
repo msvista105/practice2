@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--secret gesture view-->
+    <integer name="secret_gesture_cols">3</integer>
+    <integer name="secret_gesture_rows">3</integer>
+</resources>
