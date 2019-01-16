@@ -22,7 +22,7 @@ public class BlurCreator {
 
     public static Bitmap of(BlurFactor factor, ViewGroup target) {
         if (DEBUG) LogUtils.d(TAG, "of target.width:" + target.getWidth());
-        //不适用drawingCache的方式
+        //不使用drawingCache的方式
         Bitmap bitmap = Bitmap.createBitmap(target.getWidth(), target.getHeight(), Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
         target.draw(canvas);
