@@ -1,10 +1,16 @@
 package com.example.sxm.eventbus;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 
@@ -17,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class EventBusActivity extends AppCompatActivity {
     private static final String TAG = "EventBusActivity";
+    private Handler mSubHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,32 @@ public class EventBusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_bus);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        LogUtils.d(TAG,"main thread,tid:"+Process.myPid());
+
+        HandlerThread subThread = new HandlerThread("sub_thread_01");
+        subThread.start();
+        Handler subHander = new Handler(subThread.getLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1314:
+                        int tid = Process.myTid();
+                        LogUtils.d(TAG,"subHandler receive Message(1314),tid:"+tid);
+                        break;
+                    default:
+                        LogUtils.d(TAG,"subHandler receive Message(1314)");
+                }
+            }
+        };
+        subHander.sendMessage(subHander.obtainMessage(1314));
+        subHander.post(new Runnable() {
+            @Override
+            public void run() {
+                int tid = Process.myTid();
+                LogUtils.d(TAG,"subHandler Runnable ,tid:"+tid);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
